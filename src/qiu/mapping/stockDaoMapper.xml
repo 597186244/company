@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qiu">
+    <resultMap type="java.util.LinkedHashMap" id="purchase">  
+         
+        <result property="productNo" column="productNo"/>  
+        <result property="productName" column="productName"/>  
+        <result property="productBuyPrice" column="productBuyPrice"/>  
+    	<result property="productCategory" column="productCategory"/>
+   		<result property="productNote" column="productNote"/>
+    </resultMap> 
+    <select id="purchaseValue" resultMap="purchase">
+    	select productNo, productName,productBuyPrice,productSoldPrice,stock from product
+    </select>
+    <insert id="purchase">
+    	insert into stock values("入库",#{productNo},(select productName from product where productNo=#{productNo}),#{number},0,#{money},now())
+    </insert>
+ 	 <update id="buy">
+    	update product set stock=(stock+#{number}) where productNo=#{productNo}
+    </update> 
+    <select id="positive" resultType="Integer">
+    	select stock from product where productNo=#{productNo}
+    </select>
+    <insert id="sold1">
+    	insert into stock values("出库",#{productNo},(select productName from product where productNo=#{productNo}),#{number},#{money},0,now())
+    </insert>
+    <update id="sold">
+    	update product set stock=(stock-#{number}) where productNo=#{productNo}
+    </update> 
+</mapper>

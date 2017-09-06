@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qiu">
+    <resultMap type="java.util.LinkedHashMap" id="product">  
+         
+        <result property="productNo" column="productNo"/>  
+        <result property="productName" column="productName"/>  
+        <result property="productBuyPrice" column="productBuyPrice"/>  
+         <result property="productSoldPrice" column="productSoldPrice"/>  
+    	<result property="productCategory" column="productCategory"/>
+   		<result property="productNote" column="productNote"/>
+    </resultMap> 
+    <select id="productList" resultMap="product">
+    	select *from product
+    </select>
+     <select id="productNoCheck" resultMap="product">
+    	select * from product where productNo=#{productNo}
+    </select> 
+	  <delete id="productDelete" >  
+        delete from product where productNo in
+    	<foreach collection="array" item = "p" open="(" separator="," close=")">
+    	#{ p}  
+    </foreach>  
+    </delete>    
+    <delete id="productUpdate" >  
+        delete from product where productNo=#{productNo}
+    </delete>  
+   	<insert id="productAdd" >
+   		insert into product values(#{productNo},#{productName},#{productBuyPrice},#{productSoldPrice},#{productCategory},#{productNote},0)
+   	</insert>
+	
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qiu">
+    <resultMap type="java.util.LinkedHashMap" id="employee">  
+         
+        <result property="username" column="username"/>  
+        <result property="password" column="password"/>  
+        <result property="employeeName" column="employeeName"/>  
+    	<result property="employeeAge" column="employeeAge"/>
+    </resultMap> 
+	 <select id="login"  resultMap="employee">  
+        select * from employee where password=#{password} and username=#{username}
+    </select>
+    <update id="passwordChange"  parameterType="String">  
+        update employee set password=#{password} where username=#{username} 
+    </update>
+	
+</mapper>

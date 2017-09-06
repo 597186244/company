@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qiu">
+    <resultMap type="java.util.LinkedHashMap" id="employeeList">  
+         
+        <result property="employeeNo" column="employeeNo"/>  
+        <result property="username" column="username"/>  
+        <result property="password" column="password"/>  
+         <result property="employeeName" column="employeeName"/>  
+    	<result property="employeeAge" column="employeeAge"/>
+   		<result property="role" column="role"/>
+    </resultMap> 
+    <select id="employeeList" resultMap="employeeList">
+    	select *from employee
+    </select>
+    <select id="usernameCheck" resultMap="employeeList">
+    	select * from employee where username=#{username}
+    </select> 
+   <delete id="employeeUpdate" >  
+        delete from employee where username=#{username}
+    </delete>  
+     <delete id="employeeDelete" >  
+        delete from employee where username in
+    	<foreach collection="array" item = "p" open="(" separator="," close=")">
+    	#{ p}  
+    </foreach>  
+    </delete>   
+    <insert id="employeeAdd" >
+   		insert into employee(username,password,employeeName,employeeAge,role) values(#{username},#{password},#{employeeName},#{employeeAge},#{role})
+   	</insert>
+</mapper>
